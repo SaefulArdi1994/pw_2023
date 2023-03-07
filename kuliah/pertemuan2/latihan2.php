@@ -1,19 +1,7 @@
 <?php
-// Koneksi ke DB
-$conn = mysqli_connect('localhost', 'root', 'root', 'pw_2023');
-
-// Query
-$result = mysqli_query($conn, "SELECT * FROM mahasiswa");
-
-// Ubah data ke dalam array
-$rows = [];
-while ($row = mysqli_fetch_assoc($result)) {
-    echo $row['nama'];
-}
-
+require 'functions.php';
 //  Tampung ke dalam variabel mahasiswa
-$mahasiswa = $rows;
-
+$mahasiswa = query("SELECT * FROM mahasiswa");
 ?>
 
 <!DOCTYPE html>
@@ -32,22 +20,25 @@ $mahasiswa = $rows;
             <th>#</th>
             <th>Foto</th>
             <th>Nama</th>
-            <th>NIK</th>
+            <th>NRP</th>
             <th>Email</th>
             <th>Jurusan</th>
             <th>Aksi</th>
         </tr>
+        <?php $i =1; ?>
+        <?php foreach ($mahasiswa as $mhs) : ?>
         <tr>
-            <td>1</td>
-            <td><img src="img/img-01.jpg" width="50" alt=""></td>
-            <td>Saeful Ardi</td>
-            <td>001</td>
-            <td>saefulardi@gmail.com</td>
-            <td>Teknik Informatika</td>
+            <td><?php echo $i++ ; ?></td>
+            <td><img src="../img/<?php echo $mhs['gambar']?>" width="50" alt=""></td>
+            <td><?php echo $mhs['nama'] ?></td>
+            <td><?php echo $mhs['nrp'] ?></td>
+            <td><?php echo$mhs['email'] ?></td>
+            <td><?php echo $mhs['jurusan'] ?></td>
             <td>
                 <a href="">Edit</a> | <a href="">Hapus</a>
             </td>
         </tr>
+        <?php endforeach; ?>
     </table>
 </body>
 </html>
